@@ -1,24 +1,9 @@
 pipeline {
     agent any 
-    environment {
-        // Using returnStdout
-        CC = """${sh(
-                returnStdout: true,
-                script: 'echo "clang"'
-            )}""" 
-        // Using returnStatus
-        EXIT_STATUS = """${sh(
-                returnStatus: true,
-                script: 'exit 1'
-            )}"""
-    }
     stages {
-        stage('Example') {
-            environment {
-                DEBUG_FLAGS = '-g'
-            }
+        stage('Fetch') {
             steps {
-                sh 'printenv'
+                sh 'git clone ssh://git@repo.ccos.dev:7999/ccos20/build-ccos.git'
             }
         }
     }
